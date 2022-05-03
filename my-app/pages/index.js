@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect,useRef } from 'react'
 import Web3Modal from "web3modal";
 import {providers, Contract} from "ethers";
+import { WHITELIST_CONTRACT_ADDRESS, abi } from "../constants";
 
 export default function Home() {
   const [numberOfWhitelisted, setNumberOfWhitelisted] = useState(0);
@@ -11,7 +12,7 @@ export default function Home() {
   const [walletConnected,setWalletConnected]=useState(false);
   const web3ModalRef=useRef();
   const [joinedWhitelist, setJoinedWhitelist] = useState(false);
-
+  const [loading,setLoading]=useState(false);
 
   const getProviderOrSigner=async(needSigner=false)=>{
     const provider=await web3ModalRef.current.connect();
@@ -63,11 +64,56 @@ export default function Home() {
     }
   }
 
+  const addAddressToWhitelist=async()=>{
+    try{
+      const signer=await getProviderOrSigner(true);
+
+      const whitelistContract=new Contract(
+        WHITELIST_CONTRACT_ADDRESS,
+        abi,
+        signer
+      );
+      const tx=await whitelistContract.addAddressToWhitelist()
+      setLoading(true);
+      await tx.wait();
+      setLoading(false);
+      await getNumberOfWhitelisted();
+      setJoinedWhitelist(true);  
+    }catch(err){
+      console.error(err)
+    }
+  }
+
+  const renderButton=()=>{
+    if(walletConnected){
+      if(joinedWhitelist){
+        return(
+          <div className={styles.description}>
+            Thanks for joining the Whitelist!
+          </div>
+        )
+      }else if(loading){
+        return <button className={styles.button}>Loading...</button>
+      }else{
+        return(
+          <button onClick={addAddressToWhitelist} className={styles.button}>
+            Join the Whitelist
+          </button>
+        )
+      }
+    }else{
+      <button onClick={connectWallet} className={styles.button}>
+        Connect your wallet
+      </button>
+    }
+  }
+  
+
 const connectWallet=async()=>{
 try{
   await getProviderOrSigner();
 setWalletConnected(true);
-checkIfAddressIsWhitelisted();
+checkIfAddressInWhitelist();
 getNumberOfWhitelisted();
 //console.log("wallet connected")
 }catch(err){
@@ -99,6 +145,7 @@ getNumberOfWhitelisted();
           <div className={styles.description}>{numberOfWhitelisted} have already joined the Whitelist</div>
 
         </div>
+          {renderButton()}
         <div>
           <img className={styles.image} src="./crypto-devs.svg"/>
         </div>

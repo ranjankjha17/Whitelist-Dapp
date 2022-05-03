@@ -1,3 +1,5 @@
+export const WHITELIST_CONTRACT_ADDRESS = "0xD21a3923C189a68e4674d80f1e4036671F89D558";
+
 export const abi = [
     {
       "inputs": [
@@ -63,4 +65,3 @@ export const abi = [
       "type": "function"
     }
   ];
-export const WHITELIST_CONTRACT_ADDRESS = "YOUR_WHITELIST_CONTRACT_ADDRESS";
