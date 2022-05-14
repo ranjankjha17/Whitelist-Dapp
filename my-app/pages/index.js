@@ -7,6 +7,7 @@ import {providers, Contract} from "ethers";
 import { WHITELIST_CONTRACT_ADDRESS, abi } from "../constants";
 
 export default function Home() {
+	//date
   const [numberOfWhitelisted, setNumberOfWhitelisted] = useState(0);
 
   const [walletConnected,setWalletConnected]=useState(false);
