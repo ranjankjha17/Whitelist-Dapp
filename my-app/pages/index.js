@@ -7,7 +7,7 @@ import {providers, Contract} from "ethers";
 import { WHITELIST_CONTRACT_ADDRESS, abi } from "../constants";
 
 export default function Home() {
-	//18/5/22
+	//19/5/22
   const [numberOfWhitelisted, setNumberOfWhitelisted] = useState(0);
 
   const [walletConnected,setWalletConnected]=useState(false);
@@ -154,7 +154,7 @@ getNumberOfWhitelisted();
 
 
       <footer className={styles.footer}>
-        Made with &#10084; by Crypto Devs
+        Made with &#10084; by Ranjan
       </footer>
     </div>
   )
