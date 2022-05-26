@@ -1,5 +1,5 @@
 # Whitelist-Dapp
-make a  NFT collection named Crypto Devs. We want to give our early supporters access to a whitelist for our collection, so here we are creating a whitelist dapp for Crypto Devs
+Make a  NFT collection named Crypto Devs. We want to give our early supporters access to a whitelist for our collection, so here we are creating a whitelist dapp for Crypto Devs
 
 
 
